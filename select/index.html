@@ -1,0 +1,22 @@
+<html>
+  <script src="../core/angular.min.js"></script>
+  <div ng-app="myApp" ng-controller="myCtrl">
+    <select>
+      <option ng-repeat="x in names">{{x}}</option>
+    </select>
+
+    <select ng-model="selectedCar" ng-options="y.brand for (x, y) in cars">
+    </select>
+  </div>
+  <script>
+    var app = angular.module("myApp", []);
+    app.controller("myCtrl", function ($scope) {
+      $scope.names = [1, 2, 3, 4, 5, 6];
+      $scope.cars = {
+        car01: { brand: "Ford", model: "Mustang", color: "red" },
+        car02: { brand: "Fiat", model: "500", color: "white" },
+        car03: { brand: "Volvo", model: "XC90", color: "black" },
+      };
+    });
+  </script>
+</html>

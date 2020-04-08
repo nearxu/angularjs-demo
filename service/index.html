@@ -1,0 +1,67 @@
+<html>
+  <script src="../core/angular.min.js"></script>
+  <div ng-app="myApp" ng-controller="myCtrl">
+    <p>
+      name:
+      <input ng-model="name" />
+    </p>
+    <h1>{{myUrl}}</h1>
+    <h1>{{myhtml}}</h1>
+
+    <h1>{{mytimeout}}</h1>
+    <h1>{{myinterval}}</h1>
+    <h1>{{myservicetext}}</h1>
+
+    <h1>filter use our service {{12 | myformat}}</h1>
+  </div>
+  <script>
+    var app = angular.module("myApp", []);
+    app.controller("myCtrl", function (
+      $scope,
+      $location,
+      $http,
+      $timeout,
+      $interval,
+      myservice
+    ) {
+      $scope.name = "hello angularjs";
+      // service
+      $scope.myUrl = $location.absUrl();
+
+      // $http.get("index.html").then(function (res) {
+      //   $scope.myhtml = res.data;
+      // });
+
+      $scope.mytimeout = "hello timeout 2s change ";
+      $timeout(function () {
+        $scope.mytimeout = "helo change ";
+      }, 2000);
+
+      var count = 0;
+      $scope.myinterval = "hello interval 2s change ";
+      $interval(function () {
+        count += 1;
+        $scope.myinterval = "helo change interval " + count;
+      }, 1000);
+
+      // our service
+      $scope.myservicetext = myservice.myfn(25);
+    });
+
+    app.service("myservice", function () {
+      this.myfn = function (x) {
+        return x.toString(16);
+      };
+    });
+
+    // filter use my service
+    app.filter("myformat", [
+      "myservice",
+      function (myservice) {
+        return function (x) {
+          return myservice.myfn(x);
+        };
+      },
+    ]);
+  </script>
+</html>

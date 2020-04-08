@@ -1,0 +1,27 @@
+<html>
+  <script src="../core/angular.min.js"></script>
+  <div ng-app="myApp" ng-controller="myCtrl">
+    <p>
+      name:
+      <input ng-model="name" />
+    </p>
+    <h1>{{name | reverse}}</h1>
+    <button ng-click="toggle()">{{isshow ? '显示':'隐藏'}}</button>
+  </div>
+  <script>
+    var app = angular.module("myApp", []);
+    app.controller("myCtrl", function ($scope) {
+      $scope.name = "hello angularjs";
+      $scope.toggle = function () {
+        $scope.isshow = !$scope.isshow;
+      };
+    });
+
+    // filter
+    app.filter("reverse", function () {
+      return function (text) {
+        return text.split("").reverse().join("");
+      };
+    });
+  </script>
+</html>
